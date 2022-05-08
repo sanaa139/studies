@@ -29,7 +29,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         System.out.println("Wybierz opcje wpisujac odpowiednia cyfre:");
         System.out.println("1. Utworz drzewo dla napisow");
-        System.out.println("2. Utwor drzewo dla liczb calkowitych");
+        System.out.println("2. Utworz drzewo dla liczb calkowitych");
         System.out.println("3. Utworz drzewo dla liczb niecalkowitych");
         System.out.println("Wpisz cokolwiek innego żeby wyjsc");
         try {

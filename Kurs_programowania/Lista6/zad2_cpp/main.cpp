@@ -197,7 +197,7 @@ int main(){
     int wybor;
     cout<<"Wybierz opcje wpisujac odpowiednia cyfre:"<<endl;
     cout<<"1. Utworz drzewo dla napisow"<<endl;
-    cout<<"2. Utwor drzewo dla liczb calkowitych"<<endl;
+    cout<<"2. Utworz drzewo dla liczb calkowitych"<<endl;
     cout<<"3. Utworz drzewo dla liczb niecalkowitych"<<endl;
     cout<<"Wpisz cokolwiek innego zeby wyjsc"<<endl;
     cin>>wybor;
