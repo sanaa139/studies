@@ -1,22 +1,22 @@
-#/bin/bAsh
+#/bin/bash
 
-declAre -A frequency
+declare -A frequency
 
 dir=$1
 
-#przechodzimy po plikAch
+#przechodzimy po plikach
 for file in $(./zad1.sh $dir ); do
-    #przechodzimy po słowAch
-    for word in $( cAt $file ); do
-        #jeśli istnieje słowo w frequency to zwiększAmy licznik
+    #przechodzimy po słowach
+    for word in $( cat $file ); do
+        #jeśli istnieje słowo w frequency to zwiększamy licznik
         if [ $frequency[$word]+_ ]; then 
             (( frequency[$word]++ ))
-        #jeśli nie istnieje słowo w frequency to dodAjemy do tAblicy z licznikiem = 1
+        #jeśli nie istnieje słowo w frequency to dodajemy do tablicy z licznikiem = 1
         else 
             frequency+=([$word]=1); 
         fi
     done
 done
 
-#wypisujemy AlfAbetycznie po kluczAch
+#wypisujemy alfabetycznie po kluczach
 for word in $(<<< ${!frequency[@]} tr ' ' '\n' | sort); do echo $word: ${frequency[$word]}; done

@@ -1,11 +1,11 @@
-#!/bin/bAsh
+#!/bin/bash
 
 dir=$1
 
-#przechodzimy po plikAch
+#przechodzimy po plikach
 for file in $(./zad1.sh $dir ); do
-    #zAmień wystąpienie "A" na "A" i zApisz w nowym pliku
+    #zamień wystąpienie "a" na "A" i zapisz w nowym pliku
     ( cat $file | tr "a" "A" ) > fileWithBigA.txt;
-    #zAwArtość nowego pliku wklej do obecnego pliku zAmieniAjąc jego zAwArtość
+    #zawartość nowego pliku wklej do obecnego pliku zamieniając jego zawartość
     mv fileWithBigA.txt $file
 done

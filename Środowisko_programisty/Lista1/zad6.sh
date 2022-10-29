@@ -1,4 +1,4 @@
-#!/bin/bAsh
+#!/bin/bash
 
 dir="$1"
 
@@ -7,10 +7,10 @@ for file in $(./zad1.sh $dir); do
         declare -A frequency
         #przechodzimy po linijce
         for word in $line; do
-            #jesli wystApiło już słowo to zwiększAmy licznik
+            #jesli wystapiło już słowo to zwiększamy licznik
             if [ $frequency[$word]+_ ]; then
                 (( frequency[$word]++ ))
-            #jeśli nie wystąpiło to dodAjemy do tAblicy z licznikiem = 1
+            #jeśli nie wystąpiło to dodajemy do tablicy z licznikiem = 1
             else
                 frequency+=([$word]=1)
             fi
@@ -18,7 +18,7 @@ for file in $(./zad1.sh $dir); do
         num=1
         #przechodzimy po tablicy
         for key in "${!frequency[@]}"; do 
-            #jeśli wartość danego klucza jest większA od 1 to wypisz
+            #jeśli wartość danego klucza jest większa od 1 to wypisz
             if [ ${frequency[$key]} -gt $num ]; then
                 printf "$key:\n"
                 printf "$file:${frequency[$key]}:$line\n"
