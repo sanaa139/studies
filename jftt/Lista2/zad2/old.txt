@@ -1,0 +1,18 @@
+%{
+%}
+q1  \'
+q2  \"
+q3  \"\"\"
+
+%%
+#.*\n                      { printf("\n"); }
+{q1}(.|\n|\\{q1})*{q1}     { ECHO;}
+{q2}(.|\n|\\{q2})*{q2}     { ECHO; }
+{q3}(.|\n|\\{q3})*{q3}     { ECHO;  }
+%%
+
+int yywrap(){}
+int main(){
+      yylex();
+      return 0;
+}
