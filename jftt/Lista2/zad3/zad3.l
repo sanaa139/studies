@@ -9,12 +9,20 @@
 %x quote_in_string
 %x single_line_comment
 %x multiline_comment
+%x directive
 %%
 
 
 <INITIAL>{
-    "/\\\n/"        { BEGIN(single_line_comment) ;}
-    "\""            { BEGIN(quote_in_string); ECHO; }
+    "\#include"[ \t]* { 
+                        ECHO; 
+                        BEGIN(directive); 
+                    }
+    "/\\\n/"        { BEGIN(single_line_comment); }
+    "\""            {
+                        ECHO;
+                        BEGIN(quote_in_string);
+                    }
     "/**"           {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -42,14 +50,23 @@
     "//"            { BEGIN(single_line_comment); }
     "/*"            { BEGIN(multiline_comment); }
 }
+<directive>{
+    > {ECHO; BEGIN(INITIAL);}
+}
 <single_line_comment>{
     "\\\n"          
-    "\n"            { BEGIN(INITIAL); ECHO; }
+    "\n"            {
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
     .            
 }
 <quote_in_string>{
     \\"\""          { ECHO; }
-    "\""            { BEGIN(INITIAL); ECHO; }
+    "\""            { 
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
 }
 <doxygen_slash_and_2_stars_comment>{
     .               {
@@ -78,7 +95,10 @@
                     }
 }
 <doxygen_3slashes_comment>{
-    "\n"            { BEGIN(INITIAL); ECHO; }
+    "\n"            { 
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
     .               {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -86,7 +106,10 @@
                     }
 }
 <doxygen_2slashes_and_exclamation_comment>{
-    "\n"            { BEGIN(INITIAL); ECHO; }
+    "\n"            { 
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
     .               {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -103,7 +126,7 @@
 int yywrap(){}
 int main(int argc, char ** argv){
 
-    if ( argc > 1 && ! strcmp(argv[1], "d")){
+    if ( argc > 1 && !strcmp(argv[1], "d")){
         leave_doxygen_comments = 1;
     }
     yylex();

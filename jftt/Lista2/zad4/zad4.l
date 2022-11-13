@@ -3,12 +3,15 @@
     int stack[stack_size];
     int argLeft, argRight;
     int ptr = 0;
+    int error = 0;
+    int noarguments = 0;
 
     int popFromTheStack(){
         ptr--;
         if(ptr < 0){
             printf("\nERROR: Za mała liczba argumentów\n");
-            exit(0);
+            error = 1;
+            noarguments = 1;
         }
         return stack[ptr];
     }
@@ -19,16 +22,20 @@
             ptr++;
         } else {
             printf("\nERROR: Przepelniony stos\n");
-            exit(0);
+            error = 1;
         }
     }
 
     void print_result(){
         if(ptr > 1){
             printf("\nERROR: Za mała liczba operatorów\n");
-            exit(0);
+            error = 1;
+        }else{
+            int x = popFromTheStack();
+            if(noarguments == 0){
+                printf("\n= %d\n", x);
+            }
         }
-        printf("\n= %d\n", popFromTheStack());
     }
 %}
 
@@ -36,84 +43,133 @@
 %%
 
 "-"*[0-9]+          {
-                        ECHO; 
+                        
                         pushToTheStack(atoi(yytext));
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 
 " "                 {
-                        ECHO;
+                        
                     }
 [^0-9\+\-\*\^/%\n ] {
+                        
                         printf("\nERROR: zly symbol %s \n", yytext);
-                        ECHO;
                         BEGIN(ERROR);
                     }
 
 \+                  {
-                        ECHO;
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft + argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
-\-                   {
-                        ECHO;
+\-                  {
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft - argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 
 \*                  {
-                        ECHO;
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft * argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 
 \^                  {
-                        ECHO;
+                    
                         argRight = popFromTheStack();
-                        if(argRight < 0){
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight < 0){
                             printf("\nERROR: Wykladnik nie moze byc ujemny\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             int result = 1;
                             for(int i = 0; i < argRight; i++){
                                 result *= argLeft;
                             }
                             pushToTheStack(result);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
 
 \/                  {
-                        ECHO;
+                    
                         argRight = popFromTheStack();
-                        if(argRight == 0) {
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight == 0) {
                             printf("\nERROR: Dzielenie przez 0\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             pushToTheStack(argLeft / argRight);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
 
 \%                  {
-                        ECHO;
+            
                         argRight = popFromTheStack();
-                        if(argRight == 0) {
-                            printf("\nERROR: Dzielenie przez 0%%)\n");
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight == 0) {
+                            printf("\nERROR: Dzielenie przez 0%%\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             pushToTheStack(argLeft % argRight);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
-\n                  { print_result(); ptr = 0; }
+\n                  {   print_result(); ptr = 0; noarguments = 0; }
 
 <ERROR>{
-    .
+    .   
     \n              {
                         ptr = 0;
+                        error = 0;
                         BEGIN(INITIAL);
                     }
 }

@@ -448,15 +448,18 @@ char *yytext;
 #line 1 "zad4.l"
 #line 2 "zad4.l"
     #define stack_size 100
-    int ptr = 0;
     int stack[stack_size];
     int argLeft, argRight;
+    int ptr = 0;
+    int error = 0;
+    int noarguments = 0;
 
     int popFromTheStack(){
         ptr--;
         if(ptr < 0){
             printf("\nERROR: Za mała liczba argumentów\n");
-            exit(0);
+            error = 1;
+            noarguments = 1;
         }
         return stack[ptr];
     }
@@ -467,20 +470,24 @@ char *yytext;
             ptr++;
         } else {
             printf("\nERROR: Przepelniony stos\n");
-            exit(0);
+            error = 1;
         }
     }
 
     void print_result(){
         if(ptr > 1){
             printf("\nERROR: Za mała liczba operatorów\n");
-            exit(0);
+            error = 1;
+        }else{
+            int x = popFromTheStack();
+            if(noarguments == 0){
+                printf("\n= %d\n", x);
+            }
         }
-        printf("\n= %d\n", popFromTheStack());
     }
-#line 482 "lex.yy.c"
+#line 489 "lex.yy.c"
 
-#line 484 "lex.yy.c"
+#line 491 "lex.yy.c"
 
 #define INITIAL 0
 #define ERROR 1
@@ -698,10 +705,10 @@ YY_DECL
 		}
 
 	{
-#line 36 "zad4.l"
+#line 43 "zad4.l"
 
 
-#line 705 "lex.yy.c"
+#line 712 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -760,135 +767,184 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 38 "zad4.l"
+#line 45 "zad4.l"
 {
-                        ECHO; 
+                        
                         pushToTheStack(atoi(yytext));
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 43 "zad4.l"
+#line 53 "zad4.l"
 {
-                        ECHO;
+                        
                     }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 46 "zad4.l"
+#line 56 "zad4.l"
 {
+                        
                         printf("\nERROR: zly symbol %s \n", yytext);
-                        ECHO;
                         BEGIN(ERROR);
                     }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 52 "zad4.l"
+#line 62 "zad4.l"
 {
-                        ECHO;
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft + argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 58 "zad4.l"
+#line 74 "zad4.l"
 {
-                        ECHO;
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft - argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 65 "zad4.l"
+#line 87 "zad4.l"
 {
-                        ECHO;
+                        
                         argRight = popFromTheStack();
                         argLeft = popFromTheStack();
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                         pushToTheStack(argLeft * argRight);
+                        if(error){
+                            BEGIN(ERROR);
+                        }
                     }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 72 "zad4.l"
+#line 100 "zad4.l"
 {
-                        ECHO;
+                    
                         argRight = popFromTheStack();
-                        if(argRight < 0){
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight < 0){
                             printf("\nERROR: Wykladnik nie moze byc ujemny\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             int result = 1;
                             for(int i = 0; i < argRight; i++){
                                 result *= argLeft;
                             }
                             pushToTheStack(result);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 88 "zad4.l"
+#line 125 "zad4.l"
 {
-                        ECHO;
+                    
                         argRight = popFromTheStack();
-                        if(argRight == 0) {
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight == 0) {
                             printf("\nERROR: Dzielenie przez 0\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             pushToTheStack(argLeft / argRight);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 100 "zad4.l"
+#line 146 "zad4.l"
 {
-                        ECHO;
+            
                         argRight = popFromTheStack();
-                        if(argRight == 0) {
-                            printf("\nERROR: Dzielenie przez 0%%)\n");
+                        if(error){
+                            BEGIN(ERROR);
+                        }
+                        else if(argRight == 0) {
+                            printf("\nERROR: Dzielenie przez 0%%\n");
                             BEGIN(ERROR);
                         }else{
                             argLeft = popFromTheStack();
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                             pushToTheStack(argLeft % argRight);
+                            if(error){
+                                BEGIN(ERROR);
+                            }
                         }
                     }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 111 "zad4.l"
-{ print_result(); ptr = 0; }
+#line 166 "zad4.l"
+{   print_result(); ptr = 0; noarguments = 0; }
 	YY_BREAK
 
 case 11:
 YY_RULE_SETUP
-#line 114 "zad4.l"
+#line 169 "zad4.l"
 
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 115 "zad4.l"
+#line 170 "zad4.l"
 {
                         ptr = 0;
+                        error = 0;
                         BEGIN(INITIAL);
                     }
 	YY_BREAK
 
 case 13:
 YY_RULE_SETUP
-#line 121 "zad4.l"
+#line 177 "zad4.l"
 ECHO;
 	YY_BREAK
-#line 892 "lex.yy.c"
+#line 948 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(ERROR):
 	yyterminate();
@@ -1894,7 +1950,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 121 "zad4.l"
+#line 177 "zad4.l"
 
   
 int yywrap(){}

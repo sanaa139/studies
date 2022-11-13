@@ -1,7 +1,7 @@
 %{
 %}
 
-%x double_quotation
+%x single_quotation
 %x double_quotation
 %x three_double_quotation
 %x comment
@@ -19,21 +19,33 @@ q3  \"\"\"
 
 <single_quotation>{
     \\{q1}              { ECHO; }                 /* gdy napotkamy w stringu \' */
-    {q1}                { ECHO;BEGIN(INITIAL); }
+    {q1}                { 
+                            ECHO; 
+                            BEGIN(INITIAL);
+                        }
 }
 
 <double_quotation>{
     \\{q2}              { ECHO; }                 /* gdy napotkamy w stringu \" */
-    {q2}                { ECHO;BEGIN(INITIAL); }
+    {q2}                { 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
 }
 
 <three_double_quotation>{
     \\{q3}              { ECHO; }                 /* gdy napotkamy w stringu \"\"\" */
-    {q3}                { ECHO;BEGIN(INITIAL); }
+    {q3}                { 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
 }
 
 <comment>{
-    "\n"                { BEGIN(INITIAL); ECHO; }
+    "\n"                { 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
     .           
 }
 

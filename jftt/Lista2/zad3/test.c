@@ -1,11 +1,12 @@
 
+#include "test/*asdf*/header.h"
 #include <stdio.h>
-
+#include <foo/*bar*/baz.h>
 
 /** \brief Java style Doc String - Foo function */
-int foo();
+int foo(){ printf("foo"); };
 //
-int bar(); /**< Bar function */
+int bar(){ printf("bar"); }; /**< Bar function */
 
 /// .NET Style Doc String
 int g_global_var = 1;
@@ -13,7 +14,7 @@ int g_global_var = 1;
 /* Hello
 /* World
 // */
-int baz();
+int baz(){ printf("baz"); };
 // */
 
 /*! Global variable

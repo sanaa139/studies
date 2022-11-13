@@ -446,7 +446,7 @@ char *yytext;
 #include <stdio.h>
 int numOfLines = 0;
 int numOfWords = 0;
-int yywrap();
+
 #line 451 "lex.yy.c"
 #line 452 "lex.yy.c"
 
@@ -750,7 +750,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 16 "zad1.l"
-{printf(" ");}
+{ printf(" "); }     
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -761,7 +761,7 @@ case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
 #line 18 "zad1.l"
-{printf("\n"); numOfLines++;}
+{ printf("\n"); numOfLines++; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP

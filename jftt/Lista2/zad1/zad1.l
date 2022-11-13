@@ -2,7 +2,7 @@
 #include <stdio.h>
 int numOfLines = 0;
 int numOfWords = 0;
-int yywrap();
+
 %}
 
 WHITESPACE              [ \t]+
@@ -13,9 +13,9 @@ EMPTY_LINE              ^[ \t]*\n
 {EMPTY_LINE}                    
 ^{WHITESPACE}          
 {WHITESPACE}$          
-{WHITESPACE}                    {printf(" ");}
+{WHITESPACE}                    { printf(" "); }     
 {WORD}                          { ECHO; numOfWords++; }
-\n                              {printf("\n"); numOfLines++;}
+\n                              { printf("\n"); numOfLines++; }
 %%
 
 int yywrap(){

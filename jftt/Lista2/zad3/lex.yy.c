@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 24
-#define YY_END_OF_BUFFER 25
+#define YY_NUM_RULES 26
+#define YY_END_OF_BUFFER 27
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -360,30 +360,32 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[51] =
+static const flex_int16_t yy_accept[63] =
     {   0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,   25,   24,    2,   24,
-       14,   14,   16,   16,   19,   18,   21,   20,   13,   24,
-       11,   10,   11,   23,   23,    8,    7,    0,   15,   17,
-       12,    9,   22,    4,    3,    6,    5,    0,    1,    0
+        0,    0,    0,    0,    0,    0,    0,    0,   27,   26,
+        3,   26,   26,   16,   16,   18,   18,   21,   20,   23,
+       22,   15,   26,   13,   12,   13,   25,   25,   10,    0,
+        9,    8,    0,   17,   19,   14,   11,   24,    0,    5,
+        4,    7,    6,    0,    0,    2,    0,    0,    0,    1,
+        1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    3,    4,    1,    1,    1,    1,    1,    1,
-        1,    5,    1,    1,    1,    1,    6,    1,    1,    1,
+        1,    2,    4,    5,    6,    1,    1,    1,    1,    1,
+        1,    7,    1,    1,    1,    1,    8,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    9,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    7,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,   10,    1,    1,    1,    1,    1,    1,   11,   12,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       13,    1,    1,    1,   14,    1,    1,   15,    1,   16,
+        1,    1,    1,    1,    1,    1,   17,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -401,51 +403,58 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[8] =
+static const YY_CHAR yy_meta[18] =
     {   0,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[58] =
+static const flex_int16_t yy_base[70] =
     {   0,
-        0,    3,    8,   12,   16,   20,   32,   31,   30,   29,
-       22,    0,   28,   34,   40,   44,   28,   60,   60,   45,
-       60,   21,   60,   18,   60,   60,   60,   60,   60,   19,
-       60,   60,   18,   60,   13,   50,   53,   14,   60,   60,
-       60,   60,   60,   60,   60,   60,   60,    9,   60,   60,
-       11,   10,    7,    4,    2,    1,    0
+        0,    4,    0,    8,   10,   11,   60,   59,   58,   57,
+       11,   14,   17,   19,   23,   25,   50,   49,   57,   64,
+       64,   42,   26,   64,   47,   64,   46,   64,   64,   64,
+       64,   64,   48,   64,   64,   49,   64,   43,   64,   34,
+       31,   33,   46,   64,   64,   64,   64,   64,   37,   64,
+       64,   64,   64,   39,   31,   64,   28,   32,   30,   40,
+       38,   64,   38,   30,   24,   22,    3,    1,    0
     } ;
 
-static const flex_int16_t yy_def[58] =
+static const flex_int16_t yy_def[70] =
     {   0,
-       51,   51,   52,   52,   53,   53,   54,   54,   55,   55,
-       51,   11,   56,   56,   57,   57,   50,   50,   50,   50,
-       50,   50,   50,   50,   50,   50,   50,   50,   50,   50,
-       50,   50,   50,   50,   50,   50,   50,   50,   50,   50,
-       50,   50,   50,   50,   50,   50,   50,   50,   50,    0,
-       50,   50,   50,   50,   50,   50,   50
+       63,   63,   64,   64,   65,   65,   66,   66,   67,   67,
+       63,   63,   68,   68,   69,   69,   63,   63,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,    0,   62,   62,   62,   62,   62,   62,   62
     } ;
 
-static const flex_int16_t yy_nxt[68] =
+static const flex_int16_t yy_nxt[82] =
     {   0,
-       34,   31,   27,   19,   25,   20,   19,   23,   20,   18,
-       21,   18,   22,   18,   49,   48,   22,   18,   43,   42,
-       24,   18,   41,   40,   24,   29,   39,   50,   30,   32,
-       28,   28,   26,   26,   33,   32,   50,   50,   50,   50,
-       33,   18,   50,   50,   35,   18,   50,   50,   35,   36,
-       37,   38,   44,   50,   45,   46,   50,   50,   47,   17,
-       50,   50,   50,   50,   50,   50,   50
+       37,   34,   20,   30,   21,   22,   25,   23,   21,   22,
+       20,   23,   20,   20,   25,   32,   27,   27,   32,   35,
+       33,   35,   28,   33,   26,   20,   36,   20,   36,   38,
+       24,   38,   41,   42,   50,   43,   52,   51,   20,   61,
+       53,   61,   60,   59,   58,   57,   56,   55,   54,   49,
+       48,   47,   46,   45,   44,   40,   62,   39,   39,   31,
+       31,   29,   29,   19,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62
     } ;
 
-static const flex_int16_t yy_chk[68] =
+static const flex_int16_t yy_chk[82] =
     {   0,
-       57,   56,   55,    1,   54,    1,    2,   53,    2,    3,
-       52,   51,    3,    4,   48,   38,    4,    5,   35,   33,
-        5,    6,   30,   24,    6,   11,   22,   17,   11,   13,
-       10,    9,    8,    7,   13,   14,    0,    0,    0,    0,
-       14,   15,    0,    0,   15,   16,    0,    0,   16,   20,
-       20,   20,   36,    0,   36,   37,    0,    0,   37,   50,
-       50,   50,   50,   50,   50,   50,   50
+       69,   68,    3,   67,    1,    1,    3,    1,    2,    2,
+        4,    2,    5,    6,    4,   11,    5,    6,   12,   13,
+       11,   14,   66,   12,   65,   15,   13,   16,   14,   15,
+       64,   16,   23,   23,   41,   23,   42,   41,   63,   61,
+       42,   60,   59,   58,   57,   55,   54,   49,   43,   40,
+       38,   36,   33,   27,   25,   22,   19,   18,   17,   10,
+        9,    8,    7,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -465,9 +474,9 @@ char *yytext;
 #line 1 "zad3.l"
 #line 2 "zad3.l"
     int leave_doxygen_comments = 0;
-#line 469 "lex.yy.c"
+#line 478 "lex.yy.c"
 
-#line 471 "lex.yy.c"
+#line 480 "lex.yy.c"
 
 #define INITIAL 0
 #define doxygen_slash_and_2_stars_comment 1
@@ -477,6 +486,7 @@ char *yytext;
 #define quote_in_string 5
 #define single_line_comment 6
 #define multiline_comment 7
+#define directive 8
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -691,11 +701,11 @@ YY_DECL
 		}
 
 	{
-#line 12 "zad3.l"
+#line 13 "zad3.l"
 
 
 
-#line 699 "lex.yy.c"
+#line 709 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -722,13 +732,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 51 )
+				if ( yy_current_state >= 63 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 60 );
+		while ( yy_base[yy_current_state] != 64 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -753,19 +763,30 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-/* rule 1 can match eol */
-YY_RULE_SETUP
-#line 16 "zad3.l"
-{ BEGIN(single_line_comment) ;}
-	YY_BREAK
-case 2:
 YY_RULE_SETUP
 #line 17 "zad3.l"
-{ BEGIN(quote_in_string); ECHO; }
+{ 
+                        ECHO; 
+                        BEGIN(directive); 
+                    }
+	YY_BREAK
+case 2:
+/* rule 2 can match eol */
+YY_RULE_SETUP
+#line 21 "zad3.l"
+{ BEGIN(single_line_comment); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "zad3.l"
+#line 22 "zad3.l"
+{
+                        ECHO;
+                        BEGIN(quote_in_string);
+                    }
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 26 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -773,9 +794,9 @@ YY_RULE_SETUP
                         BEGIN(doxygen_slash_and_2_stars_comment);
                     }
 	YY_BREAK
-case 4:
+case 5:
 YY_RULE_SETUP
-#line 24 "zad3.l"
+#line 32 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -783,9 +804,9 @@ YY_RULE_SETUP
                         BEGIN(doxygen_slash_and_star_and_exclamation_comment);
                     }
 	YY_BREAK
-case 5:
+case 6:
 YY_RULE_SETUP
-#line 30 "zad3.l"
+#line 38 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -793,9 +814,9 @@ YY_RULE_SETUP
                         BEGIN(doxygen_3slashes_comment);
                     }
 	YY_BREAK
-case 6:
+case 7:
 YY_RULE_SETUP
-#line 36 "zad3.l"
+#line 44 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -803,65 +824,57 @@ YY_RULE_SETUP
                         BEGIN(doxygen_2slashes_and_exclamation_comment);
                     }
 	YY_BREAK
-case 7:
-YY_RULE_SETUP
-#line 42 "zad3.l"
-{ BEGIN(single_line_comment); }
-	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 43 "zad3.l"
+#line 50 "zad3.l"
+{ BEGIN(single_line_comment); }
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 51 "zad3.l"
 { BEGIN(multiline_comment); }
 	YY_BREAK
 
 
-case 9:
-/* rule 9 can match eol */
-YY_RULE_SETUP
-#line 46 "zad3.l"
-
-	YY_BREAK
 case 10:
-/* rule 10 can match eol */
 YY_RULE_SETUP
-#line 47 "zad3.l"
-{ BEGIN(INITIAL); ECHO; }
+#line 54 "zad3.l"
+{ECHO; BEGIN(INITIAL);}
 	YY_BREAK
+
+
 case 11:
+/* rule 11 can match eol */
 YY_RULE_SETUP
-#line 48 "zad3.l"
+#line 57 "zad3.l"
 
 	YY_BREAK
-
-
 case 12:
+/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 51 "zad3.l"
-{ ECHO; }
+#line 58 "zad3.l"
+{
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 52 "zad3.l"
-{ BEGIN(INITIAL); ECHO; }
+#line 62 "zad3.l"
+
 	YY_BREAK
 
 
 case 14:
 YY_RULE_SETUP
-#line 55 "zad3.l"
-{
-                        if(leave_doxygen_comments == 1){
-                            ECHO;
-                        }
-                    }
+#line 65 "zad3.l"
+{ ECHO; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 60 "zad3.l"
-{
-                        if(leave_doxygen_comments == 1){
-                            ECHO;
-                        }
+#line 66 "zad3.l"
+{ 
+                        ECHO;
                         BEGIN(INITIAL);
                     }
 	YY_BREAK
@@ -869,7 +882,7 @@ YY_RULE_SETUP
 
 case 16:
 YY_RULE_SETUP
-#line 68 "zad3.l"
+#line 72 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -878,7 +891,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 73 "zad3.l"
+#line 77 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -889,18 +902,22 @@ YY_RULE_SETUP
 
 
 case 18:
-/* rule 18 can match eol */
 YY_RULE_SETUP
-#line 81 "zad3.l"
-{ BEGIN(INITIAL); ECHO; }
-	YY_BREAK
-case 19:
-YY_RULE_SETUP
-#line 82 "zad3.l"
+#line 85 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
                         }
+                    }
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 90 "zad3.l"
+{
+                        if(leave_doxygen_comments == 1){
+                            ECHO;
+                        }
+                        BEGIN(INITIAL);
                     }
 	YY_BREAK
 
@@ -908,12 +925,15 @@ YY_RULE_SETUP
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 89 "zad3.l"
-{ BEGIN(INITIAL); ECHO; }
+#line 98 "zad3.l"
+{ 
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 90 "zad3.l"
+#line 102 "zad3.l"
 {
                         if(leave_doxygen_comments == 1){
                             ECHO;
@@ -923,22 +943,42 @@ YY_RULE_SETUP
 
 
 case 22:
+/* rule 22 can match eol */
 YY_RULE_SETUP
-#line 97 "zad3.l"
-{ BEGIN(INITIAL); }
+#line 109 "zad3.l"
+{ 
+                        ECHO;
+                        BEGIN(INITIAL);
+                    }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 98 "zad3.l"
-
+#line 113 "zad3.l"
+{
+                        if(leave_doxygen_comments == 1){
+                            ECHO;
+                        }
+                    }
 	YY_BREAK
+
 
 case 24:
 YY_RULE_SETUP
-#line 101 "zad3.l"
+#line 120 "zad3.l"
+{ BEGIN(INITIAL); }
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 121 "zad3.l"
+
+	YY_BREAK
+
+case 26:
+YY_RULE_SETUP
+#line 124 "zad3.l"
 ECHO;
 	YY_BREAK
-#line 942 "lex.yy.c"
+#line 982 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(doxygen_slash_and_2_stars_comment):
 case YY_STATE_EOF(doxygen_slash_and_star_and_exclamation_comment):
@@ -947,6 +987,7 @@ case YY_STATE_EOF(doxygen_2slashes_and_exclamation_comment):
 case YY_STATE_EOF(quote_in_string):
 case YY_STATE_EOF(single_line_comment):
 case YY_STATE_EOF(multiline_comment):
+case YY_STATE_EOF(directive):
 	yyterminate();
 
 	case YY_END_OF_BUFFER:
@@ -1242,7 +1283,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 51 )
+			if ( yy_current_state >= 63 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1270,11 +1311,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 51 )
+		if ( yy_current_state >= 63 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 50);
+	yy_is_jam = (yy_current_state == 62);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1950,13 +1991,13 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 101 "zad3.l"
+#line 124 "zad3.l"
 
   
 int yywrap(){}
 int main(int argc, char ** argv){
 
-    if ( argc > 1 && ! strcmp(argv[1], "d")){
+    if ( argc > 1 && !strcmp(argv[1], "d")){
         leave_doxygen_comments = 1;
     }
     yylex();

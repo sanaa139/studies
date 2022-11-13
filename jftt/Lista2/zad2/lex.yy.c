@@ -460,10 +460,10 @@ char *yytext;
 #line 461 "lex.yy.c"
 
 #define INITIAL 0
-#define QUOTE_0 1
-#define QUOTE_1 2
-#define QUOTE_2 3
-#define COMMENT 4
+#define single_quotation 1
+#define double_quotation 2
+#define three_double_quotation 3
+#define comment 4
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -741,22 +741,22 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 15 "zad2.l"
-{ ECHO;BEGIN(QUOTE_0); }
+{ ECHO;BEGIN(single_quotation); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 16 "zad2.l"
-{ ECHO;BEGIN(QUOTE_1); }
+{ ECHO;BEGIN(double_quotation); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 17 "zad2.l"
-{ ECHO;BEGIN(QUOTE_2); }
+{ ECHO;BEGIN(three_double_quotation); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 18 "zad2.l"
-{ BEGIN(COMMENT); }
+{ BEGIN(comment); }
 	YY_BREAK
 
 case 5:
@@ -767,57 +767,69 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 22 "zad2.l"
-{ ECHO;BEGIN(INITIAL); }
+{ 
+                            ECHO; 
+                            BEGIN(INITIAL);
+                        }
 	YY_BREAK
 
 
 case 7:
 YY_RULE_SETUP
-#line 26 "zad2.l"
+#line 29 "zad2.l"
 { ECHO; }                 /* gdy napotkamy w stringu \" */
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 27 "zad2.l"
-{ ECHO;BEGIN(INITIAL); }
+#line 30 "zad2.l"
+{ 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
 	YY_BREAK
 
 
 case 9:
 YY_RULE_SETUP
-#line 31 "zad2.l"
+#line 37 "zad2.l"
 { ECHO; }                 /* gdy napotkamy w stringu \"\"\" */
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 32 "zad2.l"
-{ ECHO;BEGIN(INITIAL); }
+#line 38 "zad2.l"
+{ 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
 	YY_BREAK
 
 
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 36 "zad2.l"
-{ BEGIN(INITIAL); ECHO; }
+#line 45 "zad2.l"
+{ 
+                            ECHO; 
+                            BEGIN(INITIAL); 
+                        }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 37 "zad2.l"
+#line 49 "zad2.l"
 
 	YY_BREAK
 
 case 13:
 YY_RULE_SETUP
-#line 40 "zad2.l"
+#line 52 "zad2.l"
 ECHO;
 	YY_BREAK
-#line 816 "lex.yy.c"
+#line 828 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(QUOTE_0):
-case YY_STATE_EOF(QUOTE_1):
-case YY_STATE_EOF(QUOTE_2):
-case YY_STATE_EOF(COMMENT):
+case YY_STATE_EOF(single_quotation):
+case YY_STATE_EOF(double_quotation):
+case YY_STATE_EOF(three_double_quotation):
+case YY_STATE_EOF(comment):
 	yyterminate();
 
 	case YY_END_OF_BUFFER:
@@ -1821,11 +1833,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "zad2.l"
+#line 52 "zad2.l"
 
   
 int yywrap(){}
 int main(){
-      yylex();
-      return 0;
+    yylex();
+    return 0;
 }
