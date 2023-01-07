@@ -43,11 +43,11 @@ function readVector(file::String)
     return b
 end
 
-function printSolution(X::SparseArrays.SparseVector{Float64, Int64}, file::String, was_b_from_the_file::Bool)
+function printSolution(X::SparseArrays.SparseVector{Float64, Int64}, file::String, n::Int64, was_b_from_the_file::Bool)
     open(file, "w") do f
         if was_b_from_the_file == false
             x1 = ones(n)
-            error = norm(x - x1) / norm(x)
+            error = norm(X - x1) / norm(X)
             write(f, string(error))
             write(f, "\n")
         end
@@ -92,40 +92,60 @@ function GaussianElimination(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b:
     return X
 end
 
-function GaussianEliminationWithPartialPivoting(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
-    A_COPY = copy(A)
-    b_copy = copy(b)
+function backwardSubstitutionForGaussWithPivoting(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
+    X = SparseArrays.spzeros(n)
+    X[n] = b[n] / A[n,n]
 
+    for i in n-1:-1:n-l+1
+        sum = b[i]
+        for j in i+1:n
+            sum = sum - A[i, j] * X[j]
+        end
+        X[i] = sum / A[i, i]
+    end
+    
+    for i in n-l:-1:1
+        sum = b[i]
+        for j in (i+1):min(i+2*l,n)
+            sum = sum - A[i, j] * X[j]
+        end
+        X[i] = sum / A[i, i]
+    end
+    return X
+end
+
+function GaussianEliminationWithPartialPivoting(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
     for k in 1:n-1
         largest_element = 0
         index_of_largest_element = -1
         for i = k:min(k+l, n)
-            if abs(A_COPY[i,k]) > largest_element
-                largest_element = abs(A_COPY[i,k])
+            if abs(A[i,k]) > largest_element
+                largest_element = abs(A[i,k])
                 index_of_largest_element = i
             end
         end
         
         if index_of_largest_element != k
             for i in k:min(k+2*l,n)
-                elem = A_COPY[k, i]
-                A_COPY[k, i] = A_COPY[index_of_largest_element,i]
-                A_COPY[index_of_largest_element,i] = elem
+                elem = A[k, i]
+                A[k, i] = A[index_of_largest_element,i]
+                A[index_of_largest_element,i] = elem
             end
-            elem_b = b_copy[k]
-            b_copy[index_of_largest_element] = b_copy[k]
-            b_copy[k] = elem_b
+            elem_b = b[k]
+            b[k] = b[index_of_largest_element]
+            b[index_of_largest_element] = elem_b
         end
 
-        for i in (k+1):min(k+l+1, n)
-            fctr = A_COPY[i, k] / A_COPY[k, k]
-            for j in k:min(i+l, n)
-                A_COPY[i, j] = A_COPY[i, j] - fctr * A_COPY[k, j]
+        diag = A[k, k]
+        for i in (k+1):min(k+l, n)
+            fctr = A[i, k] / diag
+            for j in k:min(k+l+1, n)
+                A[i, j] -= fctr * A[k, j]
             end
-            b_copy[i] = b_copy[i] - fctr * b_copy[k]
+            b[i] -= fctr * b[k]
         end
     end
-    X = backwardSubstitution(A_COPY, b_copy, n, l)
+    X = backwardSubstitutionForGaussWithPivoting(A, b, n, l)
     return X
 end
 
