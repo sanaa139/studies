@@ -7,6 +7,16 @@ using LinearAlgebra
 
 export readMatrix
 
+#=
+Funkcja czytająca macierz A z pliku.
+
+Dane:
+    file - plik z macierzą A
+
+Wyniki:
+    A - macierz A
+=#
+
 function readMatrix(file::String)
     data = readlines(file)
     n, l = split(data[1], " ")
@@ -31,6 +41,16 @@ function readMatrix(file::String)
     return A, n, l
 end
 
+
+#=
+Funkcja czytająca wektor prawych stron z pliku.
+
+Dane:
+    file - plik z wektorem prawych stron
+
+Wyniki:
+    b - wektor prawych stron
+=#
 function readVector(file::String)
     data = readlines(file)
     n = data[1]
@@ -43,6 +63,46 @@ function readVector(file::String)
     return b
 end
 
+#=
+Funkcja obliczająca wektor prawych stron.
+
+Dane:
+    A - macierz A,
+    x - wektor rozwiązań,
+    n - wielkość macierzy A,
+    l - wielkość bloków macierzy A
+
+Wyniki:
+    b - wektor prawych stron
+=#
+function calculateB(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, x::Vector{Float64}, n::Int64, l::Int64)
+    m = 1
+    b = zeros(n)
+    for k in 1:(l+1)
+        for i in m:min(m+2*l,n)
+            b[k] += A[k, i] * x[i]
+        end
+    end
+
+    for k in l+2:n
+        m += 1
+        for i in m:min(m+2*l,n)
+            b[k] += A[k, i] * x[i]
+        end
+    end
+    return b
+end
+
+
+#=
+Funkcja drukująca do pliku rozwiązanie oraz błąd względny jeśli wektor prawych stron był obliczany.
+
+Dane:
+    X - wektor rozwiązań,
+    file - plik do którego zostanie zapisane rozwiązanie,
+    n - wielkość macierzy A,
+    was_b_from_the_file - tak jeśli b było czytanie z pliku, nie jeśli b było obliczane
+=#
 function printSolution(X::SparseArrays.SparseVector{Float64, Int64}, file::String, n::Int64, was_b_from_the_file::Bool)
     open(file, "w") do f
         if was_b_from_the_file == false
@@ -55,6 +115,19 @@ function printSolution(X::SparseArrays.SparseVector{Float64, Int64}, file::Strin
     end
 end
 
+
+#=
+Funkcja obliczająca rozwiązanie dla eliminacji Gaussa bez wyboru elementu głównego.
+
+Dane:
+    A - macierz A,
+    b - wektor prawych stron,
+    n - wielkość macierzy A,
+    l - wielkość bloków macierzy A
+
+Wyniki:
+    X - wektor rozwiązań
+=#
 function backwardSubstitution(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
     X = SparseArrays.spzeros(n)
     X[n] = b[n] / A[n,n]
@@ -77,6 +150,19 @@ function backwardSubstitution(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b
     return X
 end
 
+#=
+Eliminacja Gaussa bez wyboru elementu głównego
+
+Dane:
+    A - macierz A,
+    b - wektor prawych stron,
+    n - wielkość macierzy A,
+    l - wielkość bloków macierzy A
+
+Wyniki:
+    X - wektor rozwiązań
+=#
+
 function GaussianElimination(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
     for k in 1:(n-1)
         diag = A[k, k]
@@ -91,6 +177,19 @@ function GaussianElimination(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b:
     X = backwardSubstitution(A, b, n, l)
     return X
 end
+
+#=
+Funkcja obliczająca rozwiązanie dla eliminacji Gaussa z częściowym wyborem elementu głównego.
+
+Dane:
+    A - macierz A,
+    b - wektor prawych stron,
+    n - wielkość macierzy A,
+    l - wielkość bloków macierzy A
+
+Wyniki:
+    X - wektor rozwiązań
+=#
 
 function backwardSubstitutionForGaussWithPivoting(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
     X = SparseArrays.spzeros(n)
@@ -114,32 +213,41 @@ function backwardSubstitutionForGaussWithPivoting(A::SparseArrays.SparseMatrixCS
     return X
 end
 
+#=
+Eliminacja Gaussa z częściowym wyborem elementu głównego
+
+Dane:
+    A - macierz A,
+    b - wektor prawych stron,
+    n - wielkość macierzy A,
+    l - wielkość bloków macierzy A
+
+Wyniki:
+    X - wektor rozwiązań
+=#
 function GaussianEliminationWithPartialPivoting(A::SparseArrays.SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int64, l::Int64)
     for k in 1:n-1
-        largest_element = 0
-        index_of_largest_element = -1
+        largest_element = -1
+        index_of_l_e = -1
         for i = k:min(k+l, n)
-            if abs(A[i,k]) > largest_element
-                largest_element = abs(A[i,k])
-                index_of_largest_element = i
+            temp = abs(A[i,k])
+            if temp > largest_element
+                largest_element = temp
+                index_of_l_e = i
             end
         end
         
-        if index_of_largest_element != k
-            for i in k:min(k+2*l,n)
-                elem = A[k, i]
-                A[k, i] = A[index_of_largest_element,i]
-                A[index_of_largest_element,i] = elem
+        if index_of_l_e != k
+            for i in k:min(k+2*l+1,n)
+                A[k, i], A[index_of_l_e,i] = A[index_of_l_e,i], A[k, i]
             end
-            elem_b = b[k]
-            b[k] = b[index_of_largest_element]
-            b[index_of_largest_element] = elem_b
+            b[k], b[index_of_l_e] = b[index_of_l_e], b[k]
         end
 
         diag = A[k, k]
         for i in (k+1):min(k+l, n)
             fctr = A[i, k] / diag
-            for j in k:min(k+l+1, n)
+            for j in k:min(k+2*l, n)
                 A[i, j] -= fctr * A[k, j]
             end
             b[i] -= fctr * b[k]
